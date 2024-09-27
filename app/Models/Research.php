@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ResearchAbstract extends Model
+class Research extends Model
 {
     use HasFactory;
 
-    protected $table ='research_abstracts';
+    protected $table ='research';
 
     protected $fillable = [
 
@@ -21,8 +21,10 @@ class ResearchAbstract extends Model
         'academic_year',
         'publication',
         'description',
-        'file_name',
-        'path',
+        'abstract_file_name',
+        'abstract_path',
+        'research_paper_file_name',
+        'research_paper_path',
         
     ];
 }

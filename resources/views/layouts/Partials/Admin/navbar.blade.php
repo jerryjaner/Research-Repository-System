@@ -17,7 +17,7 @@
         <!--end::Heaeder menu toggle-->
         <!--begin::Header Logo-->
         <div class="header-logo me-5 me-md-10 flex-grow-1 flex-lg-grow-0">
-            <a href="../dist/index.html">
+            <a href="#">
                 <img alt="Logo" src="assets/media/logos/logo-light.svg" class="h-15px h-lg-20px logo-default" />
                 <img alt="Logo" src="assets/media/logos/logo-default.svg" class="h-15px h-lg-20px logo-sticky" />
             </a>
@@ -31,27 +31,16 @@
                 <div class="header-menu align-items-stretch" data-kt-drawer="true" data-kt-drawer-name="header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_header_menu_mobile_toggle" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}">
                     <!--begin::Menu-->
                     <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch" id="#kt_header_menu" data-kt-menu="true">
-                       
-                        <div class="menu-item {{ request()->routeIs('dashboard.index') || request()->routeIs('dashboard.*') ? 'menu-here-bg' : '' }} me-0 me-lg-2">
-                            <a href="{{ route('dashboard.index') }}" class="menu-link {{ request()->routeIs('dashboard.index') || request()->routeIs('dashboard.*') ? 'active' : '' }}">
-                                <span class="menu-title">Dashboard</span>
+
+
+
+                        <div class="menu-item {{ request()->routeIs('research-databank.index') || request()->routeIs('research-databank.*') ? 'menu-here-bg' : '' }} me-0 me-lg-2">
+                            <a href="{{ route('research-databank.index') }}" class="menu-link {{ request()->routeIs('research-databank.index') || request()->routeIs('research-databank.*') ? 'active' : '' }}">
+                                <span class="menu-title"> Research Data Bank</span>
                                 <span class="menu-arrow d-lg-none"></span>
                             </a>
                         </div>
-                        
-                        <div class="menu-item {{ request()->routeIs('research-abstract.index') || request()->routeIs('research-abstract.*') ? 'menu-here-bg' : '' }} me-0 me-lg-2">
-                            <a href="{{ route('research-abstract.index') }}" class="menu-link {{ request()->routeIs('research-abstract.index') || request()->routeIs('research-abstract.*') ? 'active' : '' }}">
-                                <span class="menu-title">Research Abstract</span>
-                                <span class="menu-arrow d-lg-none"></span>
-                            </a>
-                        </div>
-                        <div class="menu-item {{ request()->routeIs('complete-research.index') || request()->routeIs('complete-research.*') ? 'menu-here-bg' : '' }} me-0 me-lg-2">
-                            <a href="{{ route('complete-research.index') }}" class="menu-link {{ request()->routeIs('complete-research.index') || request()->routeIs('complete-research.*') ? 'active' : '' }}">
-                                <span class="menu-title">Complete Research</span>
-                                <span class="menu-arrow d-lg-none"></span>
-                            </a>
-                        </div>
-                       
+
                     </div>
                     <!--end::Menu-->
                 </div>
@@ -62,8 +51,8 @@
             <div class="d-flex align-items-stretch flex-shrink-0">
                 <!--begin::Toolbar wrapper-->
                 <div class="topbar d-flex align-items-stretch flex-shrink-0">
-                
-                    <!--begin::Notifications-->
+
+                    {{-- <!--begin::Notifications-->
                     <div class="d-flex align-items-center ms-1 ms-lg-3">
                         <!--begin::Menu- wrapper-->
                         <div class="btn btn-icon btn-custom btn-active-light position-relative w-30px h-30px w-md-40px h-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
@@ -603,17 +592,17 @@
                         <!--end::Menu-->
                         <!--end::Menu wrapper-->
                     </div>
-                    <!--end::Notifications-->
-                  
+                    <!--end::Notifications--> --}}
+
                     <!--end::Quick links-->
                     <!--begin::User-->
                     <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
                         <!--begin::Menu wrapper-->
-                        
+
                         <div class="cursor-pointer symbol symbol-30px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
                             <img alt="Pic" src="{{asset('assets/media/avatars/150-26.jpg')}}" />
                         </div>
-                        
+
                         <!--begin::Menu-->
                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px" data-kt-menu="true">
                             <!--begin::Menu item-->
@@ -626,9 +615,9 @@
                                     <!--end::Avatar-->
                                     <!--begin::Username-->
                                     <div class="d-flex flex-column">
-                                        <div class="fw-bolder d-flex align-items-center fs-5">Max Smith
-                                        <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Pro</span></div>
-                                        <a href="#" class="fw-bold text-muted text-hover-primary fs-7">max@kt.com</a>
+                                        <div class="fw-bolder d-flex align-items-center fs-5">{{Auth::user()->name}}
+                                        <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Active</span></div>
+                                        <a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{Auth::user()->email}}</a>
                                     </div>
                                     <!--end::Username-->
                                 </div>
@@ -639,9 +628,9 @@
                             <!--end::Menu separator-->
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
-                                <a href="../dist/account/overview.html" class="menu-link px-5">My Profile</a>
+                                <a href="#" class="menu-link px-5">My Profile</a>
                             </div>
-                          
+
                             <div class="menu-item px-5">
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
@@ -651,7 +640,7 @@
                                     </a>
                                 </form>
                             </div>
-                           
+
                         </div>
                         <!--end::Menu-->
                         <!--end::Menu wrapper-->

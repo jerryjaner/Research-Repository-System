@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('research_abstracts', function (Blueprint $table) {
+        Schema::create('research', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('author');
@@ -21,8 +21,10 @@ return new class extends Migration
             $table->string('academic_year');
             $table->string('publication');
             $table->longtext('description');
-            $table->string('file_name');
-            $table->string('path'); 
+            $table->string('abstract_file_name');
+            $table->string('abstract_path'); 
+            $table->string('research_paper_file_name');
+            $table->string('research_paper_path'); 
             $table->timestamps();
         });
     }
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('research_abstracts');
+        Schema::dropIfExists('research');
     }
 };

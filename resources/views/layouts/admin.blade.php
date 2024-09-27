@@ -123,9 +123,9 @@
 				});
 		</script>
 
-		
+		 {{-- @yield('script') --}}
 
-		 @yield('script')
+		 @stack('script')
 	</body>
 	<!--end::Body-->
 	
