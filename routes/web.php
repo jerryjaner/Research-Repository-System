@@ -8,7 +8,8 @@ use App\Http\Controllers\HomePageController;
 
 Route::get('/', [HomePageController::class, 'index'])->name('homepage');
 Route::get('/search', [HomePageController::class, 'search'])->name('search');
-Route::get('/research/download/{id}', [HomePageController::class, 'downloadAbstract'])->name('research.download');
+Route::middleware(['auth', 'role:user'])->get('/research/download/{id}', [HomePageController::class, 'downloadAbstract'])->name('research.download');
+
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {

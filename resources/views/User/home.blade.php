@@ -26,19 +26,19 @@
                 <form action="{{ route('search') }}" method="GET" class="row g-3 w-100">
                     @csrf
                     <!-- Research Title -->
-                    <div class="col-12 col-md-5">
-                        <input type="text" class="form-control form-control-solid" name="title" placeholder="Enter research title" value="{{ request('title') }}">
-                    </div>
-                    <!-- Author -->
-                    <div class="col-12 col-md-5">
-                        <input type="text" class="form-control form-control-solid" name="author" placeholder="Enter author name" value="{{ request('author') }}">
+                    <div class="col-12 col-md-8">
+                        <input type="text" class="form-control form-control-solid" name="title" placeholder="Search research" value="{{ request('title') }}">
                     </div>
                     <!-- Filter Button -->
-                    <div class="col-12 col-md-1 d-flex">
-                        <button type="submit" class="btn btn-primary w-100">Filter</button>
+                    <div class="col-12 col-md-2 d-flex">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-filter"></i> Filter
+                        </button>
                     </div>
-                    <div class="col-12 col-md-1 d-flex">
-                        <a href="{{ route('homepage') }}" class="btn btn-success w-100">Reset</a>
+                    <div class="col-12 col-md-2 d-flex">
+                        <a href="{{ route('homepage') }}" class="btn btn-success w-100">
+                            <i class="fas fa-redo"></i>Reset
+                        </a>
                     </div>
                 </form>
             </div>
@@ -52,11 +52,12 @@
                                 <div class="card-body">
                                     <h2 class="card-title">{{ $research->title }}</h2>
                                     <p class="card-text"><strong>Author:</strong> {{ $research->author }}</p>
+                                    <p class="card-text"><strong>Academic Year:</strong> {{ $research->academic_year }}</p>
                                     <p class="card-text"><strong>Publication:</strong> {{ $research->publication }}</p>
                                     <p class="card-text"><strong>Description:</strong> {{ $research->description }}</p>
                                     @if($research->abstract_path)
                                         <a href="{{ route('research.download', $research->id) }}" class="btn btn-danger btn-sm">
-                                            <i class="fas fa-file-pdf"></i> Download {{ $research->abstract_file_name }}
+                                            <i class="fas fa-file-pdf"></i>  {{ $research->abstract_file_name }}
                                         </a>
                                     @else
                                         <p class="text-muted">Abstract PDF not available</p>
@@ -114,7 +115,7 @@
                             @endif
                         </ul>
                     </div>
-                @elseif(request()->has('title') || request()->has('author'))
+                @elseif(request()->has('title'))
                     <div class="col-md-12 mb-4 text-center">
                         <div class="card h-100">
                             <div class="card-body">
@@ -124,7 +125,6 @@
                     </div>
                 @endif
             </div>
-
 
         </div>
         <!--end::Post-->

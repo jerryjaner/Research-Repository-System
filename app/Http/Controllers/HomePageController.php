@@ -18,17 +18,11 @@ class HomePageController extends Controller
         // Initialize the query
         $query = Research::query();
 
-        if ($request->filled('title') || $request->filled('author')) {
+        if ($request->filled('title')) {
             // Filter by title if provided
             if ($request->filled('title')) {
                 $query->where('title', 'like', '%' . $request->title . '%');
             }
-
-            // Filter by author if provided
-            if ($request->filled('author')) {
-                $query->where('author', 'like', '%' . $request->author . '%');
-            }
-
             // Get the results with pagination
             $researches = $query->paginate(10);
 

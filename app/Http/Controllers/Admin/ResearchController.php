@@ -38,7 +38,7 @@ class ResearchController extends Controller
             'abstract_document' => 'required|file|mimes:pdf|max:10240',
             'full_paper_file' => 'required|file|mimes:pdf|max:10240',
         ]);
-    
+
         // Return validation errors if any
         if ($validator->fails()) {
             return response()->json([
@@ -46,13 +46,13 @@ class ResearchController extends Controller
                 'error' => $validator->errors()->toArray()
             ]);
         }
-    
+
         DB::beginTransaction();
-    
+
         try {
-            
+
             $data = $request->all();
-    
+
             // Handle abstract file upload
             if ($request->hasFile('abstract_document')) {
                 $abstract_file = $request->file('abstract_document');
@@ -60,7 +60,7 @@ class ResearchController extends Controller
                 $data['abstract_path'] = $abstract_path;
                 $data['abstract_file_name'] = $abstract_file->getClientOriginalName();
             }
-    
+
             // Handle full research paper file upload
             if ($request->hasFile('full_paper_file')) {
                 $paper_file = $request->file('full_paper_file');
@@ -68,26 +68,26 @@ class ResearchController extends Controller
                 $data['research_paper_path'] = $paper_path;
                 $data['research_paper_file_name'] = $paper_file->getClientOriginalName();
             }
-    
+
             // Create a new research record via repository
             $this->researchRepository->create($data);
-    
+
             DB::commit();
-    
+
             return response()->json([
                 'status' => 200,
                 'msg' => 'Research created successfully.',
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-    
+
             return response()->json([
                 'status' => 500,
                 'msg' => 'Failed to create research. ' . $e->getMessage(),
             ]);
         }
     }
-    
+
     public function record()
     {
         $datas = $this->researchRepository->getAll();
@@ -107,7 +107,7 @@ class ResearchController extends Controller
                                 </tr>
                             </thead>
                             <tbody>';
-    
+
             foreach ($datas as $data) {
                 $output .= '<tr style="font-size: 1rem; vertical-align: middle;">
                                 <td>' . $i++ . '</td>
@@ -146,8 +146,6 @@ class ResearchController extends Controller
 
         return response()->json(['status' => 404, 'msg' => 'File not found'], 404);
     }
-
-   
 
     public function edit(Request $request)
     {
