@@ -1,52 +1,50 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
     <form method="POST" action="{{ route('login') }}" id="login-form">
         @csrf
 
+        <!-- Session Status -->
+        <x-auth-session-status class="mb-4" :status="session('status')" />
+
         <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input
-                id="email"
-                class="block mt-1 w-full"
+        <div class="mb-3">
+            <label for="email" class="form-label">{{ __('Email') }}</label>
+            <input
                 type="email"
+                id="email"
                 name="email"
-                :value="old('email')"
+                class="form-control"
+                value="{{ old('email') }}"
                 placeholder="{{ __('Enter your email') }}"
-                required
-                autofocus
-                autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                autofocus>
+            @error('email')
+                <div class="text-danger small mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input
-                id="password"
-                class="block mt-1 w-full"
+        <div class="mb-3">
+            <label for="password" class="form-label">{{ __('Password') }}</label>
+            <input
                 type="password"
+                id="password"
                 name="password"
-                placeholder="{{ __('Enter your password') }}"
-                required
-                autocomplete="current-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                class="form-control"
+                placeholder="{{ __('Enter your password') }}">
+            @error('password')
+                <div class="text-danger small mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Log In Button -->
-        <div class="flex items-center justify-end mt-6">
-            <x-primary-button class="ms-4" href="{{route('login')}}">
-                {{ __('Log in') }}
-            </x-primary-button>
+        <!-- Login Button -->
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">{{ __('Log in') }}</button>
         </div>
 
         <!-- Register Suggestion -->
-        <div class="text-center mt-6">
-            <p class="text-sm text-gray-600">
-                {{ __('Don’t have an account yet?') }}
-                <a href="{{ route('register') }}" class="text-indigo-600 hover:text-indigo-900 font-semibold">{{ __('Create one here!') }}</a>
+        <div class="text-center mt-3">
+            <p class="text-muted">
+                {{ __("Don’t have an account yet?") }}
+                <a href="{{ route('register') }}" class="text-primary">{{ __('Create one here!') }}</a>
             </p>
         </div>
     </form>

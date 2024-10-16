@@ -29,10 +29,75 @@
     <link href="{{ URL::to('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    
+    {{-- toaster --}}
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+    <style>
+		.avatar-upload {
+			position: relative;
+			max-width: 205px;
+			margin: 0 auto; /* Center the upload area */
+		}
+		.avatar-edit {
+			position: absolute;
+			right: 12px;
+			z-index: 1;
+			top: 10px;
+		}
+		.avatar-edit input {
+			display: none;
+		}
+		.avatar-edit label {
+			display: inline-block;
+			width: 34px;
+			height: 34px;
+			margin-bottom: 0;
+			border-radius: 100%;
+			background: #FFFFFF;
+			border: 1px solid transparent;
+			box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+			cursor: pointer;
+			font-weight: normal;
+			transition: all .2s ease-in-out;
+		}
+		.avatar-edit label:hover {
+			background: #f1f1f1;
+			border-color: #d6d6d6;
+		}
+		.avatar-edit label:after {
+			content: "\f040";
+			font-family: 'FontAwesome';
+			color: #757575;
+			position: absolute;
+			top: 10px;
+			left: 0;
+			right: 0;
+			text-align: center;
+			margin: auto;
+		}
+		.avatar-preview {
+			width: 192px;
+			height: 192px;
+			position: relative;
+			border-radius: 100%;
+			border: 6px solid #F8F8F8;
+			box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+			overflow: hidden; /* Ensure the image stays within the circle */
+		}
+		#imagePreview {
+			width: 100%;
+			height: 100%;
+			border-radius: 100%;
+			background-size: cover; /* Ensure the image covers the circle */
+			background-position: center;
+			background-repeat: no-repeat;
+			position: absolute; /* Positioning adjustments */
+		}
+	</style>
 </head>
 <!--end::Head-->
 <!--begin::Body-->
-<body id="kt_body" style="background-image: url('{{ asset('assets/media/patterns/header-bg.png') }}');" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled">
+<body id="kt_body" style="background-image: url('{{ asset('assets/media/patterns/header-bg-dark.png') }}');" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled">
 
 <div class="d-flex flex-column flex-root">
     <!--begin::Page-->
@@ -85,9 +150,8 @@
 <!--end::Page Custom Javascript-->
 <!--end::Javascript-->
 <script src="{{ URL::to('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 {{-- AJAX SETUP --}}
 <script type="text/javascript">
 
@@ -98,8 +162,6 @@
     });
 
 </script>
-
-
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -121,6 +183,71 @@
                 ">"
         });
     });
+
+    $(document).ready(function() {
+        // Toggle password visibility
+        $('.toggle-password').click(function() {
+            const input = $(this).siblings('input');
+            const type = input.attr('type') === 'password' ? 'text' : 'password';
+            input.attr('type', type);
+            $(this).toggleClass('fa-eye fa-eye-slash');
+        });
+
+        // Image upload preview
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+                    $('#imagePreview').hide();
+                    $('#imagePreview').fadeIn(650);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#imageUpload").change(function() {
+            readURL(this);
+        });
+    });
+
+    //Image
+    $(document).ready(function() {
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+                    $('#imagePreview').hide();
+                    $('#imagePreview').fadeIn(650);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#imageUpload").change(function() {
+            readURL(this);
+        });
+    });
+
+    //Toastr
+    @if (Session::has('message'))
+        toastr.options.progressBar = true;
+        var type = "{{ Session::get('alert-type', 'info') }}";
+        switch (type) {
+            case 'info':
+                toastr.info("{{ Session::get('message') }}");
+                break;
+            case 'success':
+                toastr.success("{{ Session::get('message') }}");
+                break;
+            case 'warning':
+                toastr.warning("{{ Session::get('message') }}");
+                break;
+            case 'error':
+                toastr.error("{{ Session::get('message') }}");
+                break;
+        }
+    @endif
+
 </script>
 
 {{-- @yield('script') --}}

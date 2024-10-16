@@ -18,8 +18,8 @@
         <!--begin::Header Logo-->
         <div class="header-logo me-5 me-md-10 flex-grow-1 flex-lg-grow-0">
             <a href="#">
-                <img alt="Logo" src="{{ asset('assets/media/logos/ssu-logo.png') }}" class="h-50px w-auto h-lg-70px logo-default" />
-                <img alt="Logo" src="{{ asset('assets/media/logos/ssu-logo.png') }}" class="h-50px w-auto h-lg-70px logo-sticky" />
+                <img alt="Logo" src="{{ asset('assets/media/logos/ssu-logo.png') }}" class="h-50px w-auto h-lg-60px logo-default" />
+                <img alt="Logo" src="{{ asset('assets/media/logos/ssu-logo.png') }}" class="h-50px w-auto h-lg-60px logo-sticky" />
             </a>
         </div>
         <!--end::Header Logo-->
@@ -31,8 +31,6 @@
                 <div class="header-menu align-items-stretch" data-kt-drawer="true" data-kt-drawer-name="header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_header_menu_mobile_toggle" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}">
                     <!--begin::Menu-->
                     <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch" id="#kt_header_menu" data-kt-menu="true">
-
-
 
                         <div class="menu-item {{ request()->routeIs('research-databank.index') || request()->routeIs('research-databank.*') ? 'menu-here-bg' : '' }} me-0 me-lg-2">
                             <a href="{{ route('research-databank.index') }}" class="menu-link {{ request()->routeIs('research-databank.index') || request()->routeIs('research-databank.*') ? 'active' : '' }}">
@@ -598,11 +596,11 @@
                     <!--begin::User-->
                     <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
                         <!--begin::Menu wrapper-->
-
+                    
                         <div class="cursor-pointer symbol symbol-30px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                            <img alt="Pic" src="{{asset('assets/media/avatars/150-26.jpg')}}" />
+                            <img alt="Pic" src="{{ Auth::user()->profile_picture ? asset('storage/profile-picture/images/' . Auth::user()->profile_picture) : asset('assets/media/avatars/blank-profile.png') }}" />
                         </div>
-
+                        
                         <!--begin::Menu-->
                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px" data-kt-menu="true">
                             <!--begin::Menu item-->
@@ -610,15 +608,17 @@
                                 <div class="menu-content d-flex align-items-center px-3">
                                     <!--begin::Avatar-->
                                     <div class="symbol symbol-50px me-5">
-                                        <img alt="Logo" src="{{asset('assets/media/avatars/150-26.jpg')}}" />
+                                        <img alt="Logo" src="{{ Auth::user()->profile_picture ? asset('storage/profile-picture/images/' . Auth::user()->profile_picture) : asset('assets/media/avatars/blank-profile.png') }}" />
                                     </div>
+                                    
                                     <!--end::Avatar-->
                                     <!--begin::Username-->
-                                        <div class="d-flex flex-column">
-                                            <div class="fw-bolder d-flex align-items-center fs-5">{{Auth::user()->name}}
-                                            <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Active</span></div>
-                                            <a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{Auth::user()->email}}</a>
+                                    <div class="d-flex flex-column">
+                                        <div class="fw-bolder d-flex align-items-center fs-5">{{ Auth::user()->name }}
+                                            <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Active</span>
                                         </div>
+                                        <a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
+                                    </div>
                                     <!--end::Username-->
                                 </div>
                             </div>
@@ -628,23 +628,24 @@
                             <!--end::Menu separator-->
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
-                                <a href="#" class="menu-link px-5">My Profile</a>
+                                <a href="{{ route('profile-account.index') }}" class="menu-link px-5">My Profile</a>
                             </div>
-
+                    
                             <div class="menu-item px-5">
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <a class="menu-link px-5" href="route('logout')"
+                                    <a class="menu-link px-5" href="{{ route('logout') }}"
                                         onclick="event.preventDefault(); this.closest('form').submit();">
                                         {{ __('Sign Out') }}
                                     </a>
                                 </form>
                             </div>
-
+                    
                         </div>
                         <!--end::Menu-->
                         <!--end::Menu wrapper-->
                     </div>
+                    
                     <!--end::User -->
                     <!--begin::Aside mobile toggle-->
                     <!--end::Aside mobile toggle-->

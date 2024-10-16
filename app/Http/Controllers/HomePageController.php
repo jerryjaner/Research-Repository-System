@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Research;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class HomePageController extends Controller
 {
     public function index()
     {
-        return view('User.home');
+        return view('User.Homepage.index');
     }
 
     public function search(Request $request)
@@ -32,7 +31,7 @@ class HomePageController extends Controller
         }
 
         // Return the main view with the results
-        return view('User.home', compact('researches'));
+        return view('User.Homepage.index', compact('researches'));
     }
     public function downloadAbstract($id)
     {

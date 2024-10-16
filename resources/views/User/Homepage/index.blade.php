@@ -4,6 +4,7 @@
 @endsection
 
 @section('content')
+
     <!--begin::Toolbar-->
     <div class="toolbar py-5 py-lg-15" id="kt_toolbar">
         <div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
@@ -27,7 +28,7 @@
                     @csrf
                     <!-- Research Title -->
                     <div class="col-12 col-md-8">
-                        <input type="text" class="form-control form-control-solid" name="title" placeholder="Search research" value="{{ request('title') }}">
+                        <input type="text" class="form-control form-control-solid" name="title" placeholder="Search" value="{{ request('title') }}">
                     </div>
                     <!-- Filter Button -->
                     <div class="col-12 col-md-2 d-flex">
@@ -43,91 +44,80 @@
                 </form>
             </div>
 
-
             <div class="row mt-5">
+                <!-- Check if there are research records -->
                 @if(isset($researches) && $researches->isNotEmpty())
+                    <!-- Loop through each research entry -->
                     @foreach($researches as $research)
                         <div class="col-md-12 mb-4">
-                            <div class="card h-100">
+                            <div class="card h-100 shadow-sm">
                                 <div class="card-body">
-                                    <h2 class="card-title">{{ $research->title }}</h2>
+                                    <!-- Research Title -->
+                                    <h3 class="card-title mb-3">{{ $research->title }}</h3>
+            
+                                    <!-- Research Details -->
                                     <p class="card-text"><strong>Author:</strong> {{ $research->author }}</p>
-                                    <p class="card-text"><strong>Academic Year:</strong> {{ $research->academic_year }}</p>
-                                    <p class="card-text"><strong>Publication:</strong> {{ $research->publication }}</p>
-                                    <p class="card-text"><strong>Description:</strong> {{ $research->description }}</p>
-                                    @if($research->abstract_path)
-                                        <a href="{{ route('research.download', $research->id) }}" class="btn btn-danger btn-sm">
-                                            <i class="fas fa-file-pdf"></i>  {{ $research->abstract_file_name }}
-                                        </a>
-                                    @else
-                                        <p class="text-muted">Abstract PDF not available</p>
-                                    @endif
+                                    <p class="card-text"><strong>Academic Year:</strong> {{ $research->academic_year ?? 'N/A' }}</p>
+                                    <p class="card-text"><strong>Publication:</strong> {{ $research->publication ?? 'N/A' }}</p>
+                                    <p class="card-text" style="text-align: justify;"><strong>Description:</strong> {{ $research->description ?? 'No description available' }}</p>
 
+                                    <!-- Abstract Download Link -->
+                                    @if($research->abstract_path)
+                                        <p class="card-text">
+                                            <a href="{{ route('research.download', $research->id) }}" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-file-pdf"></i> Download {{ $research->abstract_file_name }}
+                                            </a>
+                                        </p>
+                                    @else
+                                        <p class="text-muted"><em>Abstract PDF not available</em></p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     @endforeach
-
+            
                     <!-- Pagination Section -->
-                    <div class="d-flex flex-stack flex-wrap pt-10 mb-2">
-                        <!-- Pagination Display Text -->
-                        <div class="fs-6 fw-semibold text-gray-700">
+                    <div class="d-flex justify-content-between align-items-center pt-4">
+                        <div class="text-muted">
                             Showing {{ $researches->firstItem() }} to {{ $researches->lastItem() }} of {{ $researches->total() }} entries
                         </div>
-
+            
                         <!-- Pagination Links -->
                         <ul class="pagination">
                             <!-- Previous Button -->
                             @if ($researches->onFirstPage())
                                 <li class="page-item disabled">
-                                    <a href="#" class="page-link">
-                                        <i class="previous"></i>
-                                    </a>
+                                    <a class="page-link"><i class="fas fa-angle-left"></i></a>
                                 </li>
                             @else
-                                <li class="page-item previous">
-                                    <a href="{{ $researches->previousPageUrl() }}" class="page-link">
-                                        <i class="previous"></i>
-                                    </a>
+                                <li class="page-item">
+                                    <a href="{{ $researches->previousPageUrl() }}" class="page-link"><i class="fas fa-angle-left"></i></a>
                                 </li>
                             @endif
-
+            
                             <!-- Page Numbers -->
                             @for ($i = 1; $i <= $researches->lastPage(); $i++)
                                 <li class="page-item {{ $i == $researches->currentPage() ? 'active' : '' }}">
                                     <a href="{{ $researches->url($i) }}" class="page-link">{{ $i }}</a>
                                 </li>
                             @endfor
-
+            
                             <!-- Next Button -->
                             @if ($researches->hasMorePages())
-                                <li class="page-item next">
-                                    <a href="{{ $researches->nextPageUrl() }}" class="page-link">
-                                        <i class="next"></i>
-                                    </a>
+                                <li class="page-item">
+                                    <a href="{{ $researches->nextPageUrl() }}" class="page-link"><i class="fas fa-angle-right"></i></a>
                                 </li>
                             @else
                                 <li class="page-item disabled">
-                                    <a href="#" class="page-link">
-                                        <i class="next"></i>
-                                    </a>
+                                    <a class="page-link"><i class="fas fa-angle-right"></i></a>
                                 </li>
                             @endif
                         </ul>
                     </div>
-                @elseif(request()->has('title'))
-                    <div class="col-md-12 mb-4 text-center">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <h3 class="">Sorry, no research records match your search criteria. Please try different keywords.</h3>
-                            </div>
-                        </div>
-                    </div>
+               
                 @endif
             </div>
-
+            
         </div>
-        <!--end::Post-->
     </div>
-    <!--end::Filter-->
 @endsection
